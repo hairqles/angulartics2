@@ -27,6 +27,7 @@ describe('Angulartics2Mixpanel', () => {
       track: jasmine.createSpy('track'),
       identify: jasmine.createSpy('identify'),
       people: {
+        increment: jasmine.createSpy('people.increment'),
         set: jasmine.createSpy('people.set'),
         set_once: jasmine.createSpy('people.set_once'),
       },
@@ -58,6 +59,16 @@ describe('Angulartics2Mixpanel', () => {
     ),
   );
 
+  it('should increment user properties',
+    fakeAsync(inject([Location, Angulartics2, Angulartics2Mixpanel],
+      (location: Location, angulartics2: Angulartics2, angulartics2Mixpanel: Angulartics2Mixpanel) => {
+        fixture = createRoot(RootCmp);
+        angulartics2.incrementUserProperties.next({ property: 'did', by: 1 });
+        advance(fixture);
+        expect(mixpanel.track).toHaveBeenCalledWith('did', 1);
+      }),
+    ),
+  );
 
   it('should set username',
     fakeAsync(inject([Location, Angulartics2, Angulartics2Mixpanel],

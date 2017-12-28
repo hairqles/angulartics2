@@ -307,6 +307,7 @@ describe('angulartics2', () => {
       'pageTrack',
       'eventTrack',
       'exceptionTrack',
+      'incrementUserProperties',
       'setUsername',
       'setUserProperties',
       'setUserPropertiesOnce',

@@ -14,6 +14,7 @@ export class Angulartics2 {
   pageTrack = new ReplaySubject<{ path?: string; location?: Location }>(10);
   eventTrack = new ReplaySubject<{ action: string } | any>(10);
   exceptionTrack = new ReplaySubject<any>(10);
+  incrementUserProperties = new ReplaySubject<{ property: string; by:number }>(10);
   setAlias = new ReplaySubject<string>(10);
   setUsername = new ReplaySubject<{ userId: string | number } | string>(10);
   setUserProperties = new ReplaySubject<any>(10);
@@ -21,7 +22,7 @@ export class Angulartics2 {
   setSuperProperties = new ReplaySubject<any>(10);
   setSuperPropertiesOnce = new ReplaySubject<any>(10);
   userTimings = new ReplaySubject<any>(10);
-
+  
   constructor(location: Location, router: Router, @Inject(ANGULARTICS2_TOKEN) setup: Angulartics2Token) {
     const defaultConfig = new DefaultConfig;
     this.settings = { ...defaultConfig, ...setup.settings };

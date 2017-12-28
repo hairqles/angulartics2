@@ -14,6 +14,8 @@ export class Angulartics2Mixpanel {
 
     this.angulartics2.eventTrack.subscribe((x: any) => this.eventTrack(x.action, x.properties));
 
+    this.angulartics2.incrementUserProperties.subscribe((x: any) => this.eventTrack(x.action, x.properties));
+    
     this.angulartics2.setUsername.subscribe((x: string) => this.setUsername(x));
 
     this.angulartics2.setUserProperties.subscribe((x: any) => this.setUserProperties(x));
@@ -40,6 +42,16 @@ export class Angulartics2Mixpanel {
   eventTrack(action: string, properties: any) {
     try {
       mixpanel.track(action, properties);
+    } catch (e) {
+      if (!(e instanceof ReferenceError)) {
+        throw e;
+      }
+    }
+  }
+
+  incrementUserProperties(property: string, by: number) {
+    try {
+      mixpanel.people.increment(property, by)
     } catch (e) {
       if (!(e instanceof ReferenceError)) {
         throw e;
